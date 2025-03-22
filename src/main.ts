@@ -7,21 +7,25 @@ import { Vector2 } from './interfaces.js';
 function moveMapWithMouse(mousePos: Vector2, map: GameMap) {
   if (!isGameFocused)
     return;
+
   let buffer = 75;
   let dir = { x: 0, y: 0 };
-  console.log(mousePos.x, mousePos.y);
 
   if (mousePos.x >= (settings.WIDTH - buffer)) {
-    dir.x += -1;
+    let intensity = (mousePos.x - (settings.WIDTH - buffer)) / buffer;
+    dir.x -= intensity;
   }
   if (mousePos.x <= buffer) {
-    dir.x += 1;
+    let intensity = (100 - mousePos.x) / buffer;
+    dir.x += intensity;
   }
   if (mousePos.y <= buffer) {
-    dir.y += 1;
+    let intensity = (100 - mousePos.y) / buffer;
+    dir.y += intensity;
   }
   if (mousePos.y >= (settings.HEIGHT - buffer * 2.5)) {
-    dir.y -= 1;
+    let intensity = (mousePos.y - (settings.HEIGHT - buffer * 2.5)) / buffer * 2.5;
+    dir.y -= intensity;
   }
   map.moveMap(dir);
 }
@@ -36,6 +40,39 @@ window.addEventListener('focus', () => {
   isGameFocused = true;
 })
 
+function setupZoom(mousePos: Vector2, map: GameMap) {
+  window.addEventListener('wheel', (event) => {
+    let zoomIntensity = 0.05;
+    let minZoom = 0.75;
+    let maxZoom = 2;
+    let scrollDir = event.deltaY / 100;
+
+    enum Dir {
+      Up = -1,
+      Down = 1,
+    }
+
+    let container = map.getContainer();
+
+    if (scrollDir == Dir.Up && container.scale.x < maxZoom) {
+      const scaleFactor = 1 - (container.scale.x / (container.scale.x + zoomIntensity));
+      container.scale.x += zoomIntensity;
+      container.scale.y += zoomIntensity;
+
+      container.x -= (mousePos.x - container.x) * scaleFactor;
+      container.y -= (mousePos.y - container.y) * scaleFactor;
+    }
+    else if (scrollDir == Dir.Down && container.scale.x > minZoom) {
+      const scaleFactor = 1 - (container.scale.x / (container.scale.x + zoomIntensity));
+      container.scale.x -= zoomIntensity;
+      container.scale.y -= zoomIntensity;
+
+      container.x += (mousePos.x - container.x) * scaleFactor;
+      container.y += (mousePos.y - container.y) * scaleFactor;
+    }
+  })
+
+}
 
 async function setup() {
   let mousePos = { x: 0, y: 0 };
@@ -54,30 +91,7 @@ async function setup() {
   });
 
 
-  window.addEventListener('wheel', (event) => {
-    const zoomSpeed = 0.05;
-    let container = map.getContainer();
-
-    if (event.deltaY < 0) {
-      container.scale.x += zoomSpeed;
-      container.scale.y += zoomSpeed;
-
-      const scaleFactor = container.scale.x / (container.scale.x + zoomSpeed);
-      container.x -= (mousePos.x - container.x) * (1 - scaleFactor);
-      container.y -= (mousePos.y - container.y) * (1 - scaleFactor);
-    }
-    else {
-      container.scale.x -= zoomSpeed;
-      container.scale.y -= zoomSpeed;
-
-      const scaleFactor = container.scale.x / (container.scale.x + zoomSpeed);
-      container.x += (mousePos.x - container.x) * (1 - scaleFactor);
-      container.y += (mousePos.y - container.y) * (1 - scaleFactor);
-
-    }
-
-
-  })
+  setupZoom(mousePos, map);
 
   pixiApp.ticker.add((time) => {
     moveMapWithMouse(mousePos, map);
