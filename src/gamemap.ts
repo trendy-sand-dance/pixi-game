@@ -79,6 +79,11 @@ export default class GameMap {
     }
   }
 
+  moveMap(offset: Vector2) {
+    this.container.x += offset.x;
+    this.container.y += offset.y;
+  }
+
   getContainer() {
     return this.container;
   }
