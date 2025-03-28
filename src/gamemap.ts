@@ -67,13 +67,18 @@ export default class GameMap {
         let point = new Point(col, row);
 
         // Raise Y 
-        // point.asIsometric.y -= tileMap[row][col] * this.tileSize / 2;
+        point.asIsometric.y -= tileMap[row][col] * this.tileSize / 2;
 
         // this.spriteTiles[row][col].x = point.asIsometric.x;
         // this.spriteTiles[row][col].y = point.asIsometric.y;
+
+        // Isometric map offset
         point.add({ x: settings.WIDTH / 2, y: 0 });
 
-        this.drawIsometricTile(this.graphicsContext, point.asIsometric, this.tileSize, this.tileSize, false);
+        if (tileMap[row][col] != 0)
+          this.drawIsometricTile(this.graphicsContext, point.asIsometric, this.tileSize, this.tileSize, true);
+        else
+          this.drawIsometricTile(this.graphicsContext, point.asIsometric, this.tileSize, this.tileSize, false);
         // this.drawIsometricTile(this.graphicsContext, point.asCartesian, this.tileSize, this.tileSize, false);
       }
     }

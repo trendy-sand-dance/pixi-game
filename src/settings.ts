@@ -4,7 +4,7 @@ export const BGCOLOR = '#ffffff';
 export const TILESIZE = 32;
 export const GRIDSIZE = 64;
 export const PLAYERSIZE = 5;
-export const PLAYERSPEED = 0.02;
+export const PLAYERSPEED = 0.1;
 export const TILEMAP = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2],
