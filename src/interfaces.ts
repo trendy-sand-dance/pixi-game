@@ -14,7 +14,7 @@ export class Point {
     this.asIsometric = { x: (x * settings.TILESIZE - y * settings.TILESIZE), y: (x * settings.TILESIZE / 2 + y * settings.TILESIZE / 2) };
   }
   add(offset: Vector2) {
-    this.asCartesian = { x: this.asCartesian.x + offset.x, y: this.asCartesian.y + offset.y };
+    // this.asCartesian = { x: this.asCartesian.x + offset.x, y: this.asCartesian.y + offset.y };
     this.asIsometric = { x: this.asIsometric.x + offset.x, y: this.asIsometric.y + offset.y };
   }
 }

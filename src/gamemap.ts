@@ -50,11 +50,13 @@ export default class GameMap {
   drawIsometricTile(context: Graphics, point: Vector2, w: number, h: number, outline: boolean) {
     context.poly([point.x, point.y, point.x + w, point.y + h / 2, point.x, point.y + h, point.x - w, point.y + h / 2, point.x, point.y]);
     if (outline) {
-      context.stroke({ color: 0xff0000 });
+      context.fill(settings.CGA_BLACK);
+      context.stroke({ color: settings.CGA_CYAN });
     }
     else {
-      context.fill(0x777777);
-      context.stroke({ color: 0xffffff });
+      // context.fill(settings.CGA_PINK);
+      context.fill(settings.CGA_BLACK);
+      context.stroke({ color: settings.CGA_PINK });
     }
   }
 
@@ -67,16 +69,38 @@ export default class GameMap {
         let point = new Point(col, row);
 
         // Raise Y 
-        // point.asIsometric.y -= tileMap[row][col] * this.tileSize / 2;
+        point.asIsometric.y -= tileMap[row][col] * this.tileSize / 2;
+
+        // Draw walls
+        if (tileMap[row][col] != 0) {
+          // LB
+          this.graphicsContext.moveTo(point.asIsometric.x, point.asIsometric.y + this.tileSize)
+            .lineTo(point.asIsometric.x, point.asIsometric.y + this.tileSize * (tileMap[row][col] + 1));
+          // RB
+          this.graphicsContext.moveTo(point.asIsometric.x - this.tileSize, point.asIsometric.y + this.tileSize / 2)
+            .lineTo(point.asIsometric.x - this.tileSize, (point.asIsometric.y + (this.tileSize / 2 * (tileMap[row][col] + 1))));
+          // RT
+          this.graphicsContext.moveTo(point.asIsometric.x + this.tileSize, point.asIsometric.y + this.tileSize / 2)
+            .lineTo(point.asIsometric.x + this.tileSize, (point.asIsometric.y + (this.tileSize / 2 * (tileMap[row][col] + 1))));
+          this.graphicsContext.stroke({ color: settings.CGA_CYAN });
+
+        }
 
         // this.spriteTiles[row][col].x = point.asIsometric.x;
         // this.spriteTiles[row][col].y = point.asIsometric.y;
-        point.add({ x: settings.WIDTH / 2, y: 0 });
 
-        this.drawIsometricTile(this.graphicsContext, point.asIsometric, this.tileSize, this.tileSize, false);
+        if (tileMap[row][col] != 0)
+          this.drawIsometricTile(this.graphicsContext, point.asIsometric, this.tileSize, this.tileSize, true);
+        else
+          this.drawIsometricTile(this.graphicsContext, point.asIsometric, this.tileSize, this.tileSize, false);
         // this.drawIsometricTile(this.graphicsContext, point.asCartesian, this.tileSize, this.tileSize, false);
       }
     }
+  }
+
+  moveMap(offset: Vector2) {
+    this.container.x += offset.x;
+    this.container.y += offset.y;
   }
 
   getContainer() {

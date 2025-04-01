@@ -1,10 +1,18 @@
+// Screen size
 export const WIDTH = 1680;
 export const HEIGHT = 1050;
+
+// Colors
 export const BGCOLOR = '#ffffff';
+export const CGA_CYAN = '#01FFFF';
+export const CGA_PINK = '#FF55FE';
+export const CGA_BLACK = '#000000';
+
+// Tile settings
 export const TILESIZE = 32;
 export const GRIDSIZE = 64;
 export const PLAYERSIZE = 5;
-export const PLAYERSPEED = 0.02;
+export const PLAYERSPEED = 0.1;
 export const TILEMAP = [
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
   [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 2],
