@@ -1,6 +1,14 @@
+// Screen size
 export const WIDTH = 1680;
 export const HEIGHT = 1050;
+
+// Colors
 export const BGCOLOR = '#ffffff';
+export const CGA_CYAN = '#01FFFF';
+export const CGA_PINK = '#FF55FE';
+export const CGA_BLACK = '#000000';
+
+// Tile settings
 export const TILESIZE = 32;
 export const GRIDSIZE = 64;
 export const PLAYERSIZE = 5;

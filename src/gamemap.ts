@@ -50,11 +50,13 @@ export default class GameMap {
   drawIsometricTile(context: Graphics, point: Vector2, w: number, h: number, outline: boolean) {
     context.poly([point.x, point.y, point.x + w, point.y + h / 2, point.x, point.y + h, point.x - w, point.y + h / 2, point.x, point.y]);
     if (outline) {
-      context.stroke({ color: 0xff0000 });
+      context.fill(settings.CGA_BLACK);
+      context.stroke({ color: settings.CGA_CYAN });
     }
     else {
-      context.fill(0x777777);
-      context.stroke({ color: 0xffffff });
+      // context.fill(settings.CGA_PINK);
+      context.fill(settings.CGA_BLACK);
+      context.stroke({ color: settings.CGA_PINK });
     }
   }
 
@@ -71,9 +73,6 @@ export default class GameMap {
 
         // this.spriteTiles[row][col].x = point.asIsometric.x;
         // this.spriteTiles[row][col].y = point.asIsometric.y;
-
-        // Isometric map offset
-        point.add({ x: settings.WIDTH / 2, y: 0 });
 
         if (tileMap[row][col] != 0)
           this.drawIsometricTile(this.graphicsContext, point.asIsometric, this.tileSize, this.tileSize, true);

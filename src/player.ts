@@ -1,6 +1,6 @@
 import { Sprite, Texture } from "pixi.js";
 import { Vector2, Point } from './interfaces.js';
-import * as settings from './settings.js';
+// import * as settings from './settings.js';
 
 export default class Player {
   public id: number;
@@ -9,10 +9,7 @@ export default class Player {
   private context: Sprite;
   constructor(id: number, position: Point, texture: Texture) {
     this.context = new Sprite(texture);
-    this.context.anchor.set(0.5);
-
-    // Isometric map offset
-    position.add({ x: settings.WIDTH / 2, y: 0 });
+    // this.context.anchor.set(0.5);
 
     this.position = position;
     this.id = id;
@@ -21,8 +18,6 @@ export default class Player {
   updatePosition(position: Vector2) {
     this.position = new Point(position.x, position.y);
 
-    // Isometric map offset
-    this.position.add({ x: settings.WIDTH / 2, y: 0 });
     this.context.x = this.position.asIsometric.x;
     this.context.y = this.position.asIsometric.y;
   }

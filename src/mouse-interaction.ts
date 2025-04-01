@@ -73,7 +73,7 @@ export function setupMapZoom(mousePos: Vector2, map: GameMap) {
     let zoomIntensity = 0.05;
     let minZoom = 0.75;
     let maxZoom = 2;
-    let scrollDir = event.deltaY / 120;
+    let scrollDir = event.deltaY / Math.abs(event.deltaY);
 
     enum Dir {
       Up = -1,
