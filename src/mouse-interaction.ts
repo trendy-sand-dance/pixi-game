@@ -37,14 +37,14 @@ export function moveMapWithMouse(mousePos: Vector2, map: GameMap, focused: boole
   if (!focused)
     return;
 
-  let bufferHorizontal = window.screen.width * 0.25;
-  let bufferVertical = window.screen.height * 0.25;
+  let bufferHorizontal = window.innerWidth * 0.1;
+  let bufferVertical = window.innerHeight * 0.1;
   let dir = { x: 0, y: 0 };
-  let moveIntensity = 10;
+  let moveIntensity = 5;
 
   // Right-hand side
-  if (mousePos.x >= (window.screen.width - bufferHorizontal)) {
-    let fraction = (mousePos.x - (window.screen.width - bufferHorizontal)) / bufferHorizontal;
+  if (mousePos.x >= (window.innerWidth - bufferHorizontal)) {
+    let fraction = (mousePos.x - (window.innerWidth - bufferHorizontal)) / bufferHorizontal;
     dir.x -= fraction * moveIntensity;
   }
   // Left-hand side
@@ -60,8 +60,8 @@ export function moveMapWithMouse(mousePos: Vector2, map: GameMap, focused: boole
   }
 
   // Bot side
-  if (mousePos.y >= (window.screen.height - bufferVertical)) {
-    let fraction = (mousePos.y - (window.screen.height - bufferVertical)) / bufferVertical;
+  if (mousePos.y >= (window.innerHeight - bufferVertical)) {
+    let fraction = (mousePos.y - (window.innerHeight - bufferVertical)) / bufferVertical;
     dir.y -= fraction * moveIntensity;
   }
   map.moveMap(dir);

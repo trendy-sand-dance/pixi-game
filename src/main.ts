@@ -6,7 +6,7 @@ import * as settings from './settings.js';
 import * as mouse from './mouse-interaction.js';
 import * as input from './input.js';
 
-let isGameFocused = false;
+let isGameFocused = true;
 let mousePos = { x: 0, y: 0 };
 
 window.addEventListener('pointermove', (event) => {

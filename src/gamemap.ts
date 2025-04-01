@@ -71,6 +71,21 @@ export default class GameMap {
         // Raise Y 
         point.asIsometric.y -= tileMap[row][col] * this.tileSize / 2;
 
+        // Draw walls
+        if (tileMap[row][col] != 0) {
+          // LB
+          this.graphicsContext.moveTo(point.asIsometric.x, point.asIsometric.y + this.tileSize)
+            .lineTo(point.asIsometric.x, point.asIsometric.y + this.tileSize * (tileMap[row][col] + 1));
+          // RB
+          this.graphicsContext.moveTo(point.asIsometric.x - this.tileSize, point.asIsometric.y + this.tileSize / 2)
+            .lineTo(point.asIsometric.x - this.tileSize, (point.asIsometric.y + (this.tileSize / 2 * (tileMap[row][col] + 1))));
+          // RT
+          this.graphicsContext.moveTo(point.asIsometric.x + this.tileSize, point.asIsometric.y + this.tileSize / 2)
+            .lineTo(point.asIsometric.x + this.tileSize, (point.asIsometric.y + (this.tileSize / 2 * (tileMap[row][col] + 1))));
+          this.graphicsContext.stroke({ color: settings.CGA_CYAN });
+
+        }
+
         // this.spriteTiles[row][col].x = point.asIsometric.x;
         // this.spriteTiles[row][col].y = point.asIsometric.y;
 
